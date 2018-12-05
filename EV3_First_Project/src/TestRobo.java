@@ -28,7 +28,7 @@ public class TestRobo {
     //lichtsensor
     testLightSensor(3);
     //testColorSensor(1); // new one
-    //testNXTColorSensor(1); //old one
+    //testNXTColorSensor(1); //old one second
   }
   
   private static void testLightSensor(int mode) {
