@@ -26,10 +26,42 @@ public class TestRobo {
     //backward();
     //rotate();
     //lichtsensor
-    testLightSensor();
+    testLightSensor(3);
     //testColorSensor(1); // new one
     //testNXTColorSensor(1); //old one
   }
+  
+  private static void testLightSensor(int mode) {
+      NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
+        LCD.drawString("Init", 2, 2);
+        LCD.setAutoRefresh(false);
+        
+      //Werte entsprechen den Tests mit RedMode(eingeschaltenes Licht)
+      //Zusatzinfos: 1 ist hell, 0 ist ganz dunkel
+      //0,56... bei weißem Papier
+      //0.43 bei grau
+      //0,32 wenn ganz schwarz... komplett schwarz
+      //0,30 bei Abgrund
+      //weiß bei Schatten 0,7  
+
+      //SensorMode color = colorSensor.getAmbientMode(); //braucht man mit Umgebungslicht zu messen
+      SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+
+      float[] lightSample = new float[color.sampleSize()];
+      
+      while (!Button.ESCAPE.isDown()) {
+        color.fetchSample(lightSample, 0);
+        
+        LCD.refresh();
+        LCD.clear();
+        LCD.drawString("ColorId: " + lightSample[0],1,1);
+        //LCD.drawString(" FlooLight: " + floodNumb, 1, 1);
+        Delay.msDelay(500);
+      }
+      
+      lightSensor.close();
+  }
+    
   
  private static void testNXTColorSensor(int mode) {
    LCD.drawString("in testFunc", 1, 1);
@@ -64,23 +96,9 @@ public class TestRobo {
    
    colorSensor.close();
     
-  }
-
-    private static void testLightSensor() {
-    NXTLightSensor light = new NXTLightSensor(SensorPort.S1);
-    SensorMode sm = light.getAmbientMode();
-    
-    System.out.println(" Hell " + sm.getName());
-    
-    light.close();
-    LCD.clear();
-    
-  }
-  
-  
-  
-/*
-  
+  }  
+ 
+/* 
   Für ColorId  
   public static final int RED = 0;
   public static final int GREEN = 1;
