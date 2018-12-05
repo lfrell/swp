@@ -12,7 +12,7 @@ import lejos.robotics.RegulatedMotor;
 import lejos.robotics.SampleProvider;
 import lejos.robotics.filter.MeanFilter;
 import lejos.utility.Delay;
-import lejos.nxt.LightSensor;
+//import lejos.nxt.LightSensor;
 
 public class TestRobo {
 
