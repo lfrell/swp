@@ -24,7 +24,7 @@ public class KWM {
 		//combineMotorAndTouch();
 		testColorSensor(1); //hier gibt es 3 verschiedene modi ..
 		System.exit(0);
-	}
+	}		
 
 	/*	Klasse testet die Motoren	medium ist der groﬂe, large sind die kleinen ... left motor ist zB auf Port b ..  MotorPort.B*/
 	private static void testMotors() {
