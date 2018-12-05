@@ -26,12 +26,12 @@ public class TestRobo {
     //backward();
     //rotate();
     //lichtsensor
-    testLightSensor(3);
+    testLightSensor();
     //testColorSensor(1); // new one
     //testNXTColorSensor(1); //old one second
   }
   
-  private static void testLightSensor(int mode) {
+  private static void testLightSensor() {
       NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
         LCD.drawString("Init", 2, 2);
         LCD.setAutoRefresh(false);
