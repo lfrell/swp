@@ -61,6 +61,7 @@ public class Drive {
 		rightMotor.setSpeed(1000);
 		leftMotor.setAcceleration(400);
 		rightMotor.setAcceleration(400);
+		
 		//Funktion die dir immer Speed zurückgibt
 		leftMotor.forward();
 		//rightMotor.forward();
@@ -73,5 +74,13 @@ public class Drive {
 	}
 
 
+	/*
+	 * Je nachdem, wie weit der Roboter entfernt ist, desto anders ist die Geschwindigkeit
+	 * */
+	public static int calculateSpeed(int distance) {
+		int calculatedSpeed=1;
+		
+		return calculatedSpeed;
+	}
 
 }
