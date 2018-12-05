@@ -16,6 +16,8 @@ import lejos.robotics.SampleProvider;
 import lejos.robotics.filter.MeanFilter;
 import lejos.utility.Delay;
 
+//hab was geändert...
+
 public class KWM {
 	public static void main(String[] args) {
 		//testMotors();
