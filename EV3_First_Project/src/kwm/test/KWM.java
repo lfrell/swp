@@ -191,7 +191,6 @@ public class KWM {
 	    }
 		us.close();
 		LCD.clear();
-		
 	}
 	
 	/* 0 - sehr nahe, 100 weit entfernt */
