@@ -10,5 +10,13 @@
 package kwm.robo;
 
 public class Strategy {
+  
+  //-------------------------------------------------------------
+  // moveYellowBrick() - checks if the brick is yellow and
+  // moves it from the roadway
+  //------------------------------------------------------------- 
+  public static void moveYellowBrick() {
+    
+  }
 
 }
