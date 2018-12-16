@@ -214,7 +214,7 @@ public class Sensor {
 			}
 	    }
 		
-		us.close();
+		//us.close();
 		LCD.clear();
 		return false;
   }

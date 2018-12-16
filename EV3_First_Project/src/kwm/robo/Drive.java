@@ -25,8 +25,9 @@ public class Drive {
   // lines (LighSensor)
   //-------------------------------------------------------------  
   public static void driveOnRoadWay() {
-    while(Sensor.isBlackOrRed()&&!Sensor.checkAbyss()) {
-      forward();
+    while(!Sensor.checkAbyss()) {
+      if(Sensor.isBlackOrRed())
+    	forward();
     }
     //check colorsensor for intercept
     //b
@@ -42,8 +43,8 @@ public class Drive {
     rightMotor.resetTachoCount();
     leftMotor.rotateTo(0);
     rightMotor.rotateTo(0);
-    leftMotor.setSpeed(500);
-    rightMotor.setSpeed(500);
+    leftMotor.setSpeed(200);
+    rightMotor.setSpeed(200);
     leftMotor.setAcceleration(400);
     rightMotor.setAcceleration(400);
   }
@@ -75,7 +76,7 @@ public class Drive {
   public static void driveCurve() {
     LCD.drawString("Hello KWM! Testing the motors", 0, 4);
 
-    driveSetUp();
+    //driveSetUp();
     rightMotor.setAcceleration(400);
     //Funktion die dir immer Speed zurückgibt
     leftMotor.forward();

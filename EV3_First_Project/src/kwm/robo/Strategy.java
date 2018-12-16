@@ -25,7 +25,14 @@ public class Strategy {
   // moves it from the roadway
   //------------------------------------------------------------- 
   public static void moveYellowBrick() {
-    
+	  while(!Sensor.checkAbyss() || Sensor.isBlackOrRed() ) {
+	    	Drive.forward();
+	    }
+	    //check colorsensor for intercept
+	    Drive.stop();  
+	    Drive.driveCurve();
+	    Drive.stop();
+	    
   }
 
 }

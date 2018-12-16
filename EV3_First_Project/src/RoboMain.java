@@ -32,11 +32,11 @@ public class RoboMain {
       
     }
     */
-    //Drive.driveOnRoadWay();
+    Drive.driveOnRoadWay();
    
 	 
 	  //checkAbyss();
-	  returnColor();
+	  //returnColor();
 	  
   }
   
