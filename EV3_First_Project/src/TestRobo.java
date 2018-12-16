@@ -114,7 +114,6 @@ public class TestRobo {
         default: colorSensor.getColorIDMode();
       }
       
-
     float[] colorSample = new float[color.sampleSize()];
     
     while (!Button.ESCAPE.isDown()) {
