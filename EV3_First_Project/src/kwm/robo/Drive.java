@@ -26,13 +26,13 @@ public class Drive {
   //-------------------------------------------------------------  
   public static void driveOnRoadWay() {
     while(Sensor.isBlackOrRed()&&!Sensor.checkAbyss()) {
-      if(!Sensor.checkAbyss()) forward();
-      else stop(); 
+      forward();
     }
     //check colorsensor for intercept
     //b
     stop();  
     driveCurve();
+    stop();
     
   }
   public static void driveSetUp() {
