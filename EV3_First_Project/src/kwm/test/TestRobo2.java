@@ -1,3 +1,4 @@
+package kwm.test;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -16,7 +17,7 @@ import lejos.utility.Delay;
 
 //changes
 
-public class TestRobo {
+public class TestRobo2 {
 
   public static RegulatedMotor leftMotor = new EV3LargeRegulatedMotor(MotorPort.D);
   public static RegulatedMotor rightMotor = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -28,8 +29,40 @@ public class TestRobo {
     //lichtsensor
     testLightSensor();
     //testColorSensor(1); // new one
-    //testNXTColorSensor(1); //old one
+    //testNXTColorSensor(1); //old one second second
   }
+  
+  private static void testLightSensor() {
+      NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
+        LCD.drawString("Init", 2, 2);
+        LCD.setAutoRefresh(false);
+        
+      //Werte entsprechen den Tests mit RedMode(eingeschaltenes Licht)
+      //Zusatzinfos: 1 ist hell, 0 ist ganz dunkel
+      //0,56... bei weißem Papier
+      //0.43 bei grau
+      //0,32 wenn ganz schwarz... komplett schwarz
+      //0,30 bei Abgrund
+      //weiß bei Schatten 0,7  
+
+      //SensorMode color = colorSensor.getAmbientMode(); //braucht man mit Umgebungslicht zu messen
+      SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+
+      float[] lightSample = new float[color.sampleSize()];
+      
+      while (!Button.ESCAPE.isDown()) {
+        color.fetchSample(lightSample, 0);
+        
+        LCD.refresh();
+        LCD.clear();
+        LCD.drawString("ColorId: " + lightSample[0],1,1);
+        //LCD.drawString(" FlooLight: " + floodNumb, 1, 1);
+        Delay.msDelay(500);
+      }
+      
+      lightSensor.close();
+  }
+    
   
  private static void testNXTColorSensor(int mode) {
    LCD.drawString("in testFunc", 1, 1);
@@ -64,23 +97,9 @@ public class TestRobo {
    
    colorSensor.close();
     
-  }
-
-    private static void testLightSensor() {
-    NXTLightSensor light = new NXTLightSensor(SensorPort.S1);
-    SensorMode sm = light.getAmbientMode();
-    
-    System.out.println(" Hell " + sm.getName());
-    
-    light.close();
-    LCD.clear();
-    
-  }
-  
-  
-  
-/*
-  
+  }  
+ 
+/* 
   Für ColorId  
   public static final int RED = 0;
   public static final int GREEN = 1;
@@ -113,8 +132,8 @@ public class TestRobo {
         case 3: color = colorSensor.getAmbientMode(); break;
         default: colorSensor.getColorIDMode();
       }
-     
       
+
     float[] colorSample = new float[color.sampleSize()];
     
     while (!Button.ESCAPE.isDown()) {
