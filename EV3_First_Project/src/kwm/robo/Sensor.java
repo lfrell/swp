@@ -180,9 +180,89 @@ public class Sensor {
 
   //-------------------------------------------------------------
   // checkAbyss() - checks if there is an abyss(ultra sensor)
+  // The theoretical range of the sensor is 0,04 to 2.54 meter.
+  // normal desk height: 0.089 .. if > 0.09, there is an abyssis!!
+  // returns true, if robo sees, that there is an abyssis upcoming
   //------------------------------------------------------------- 
-  public static void checkAbyss() {
-    
-  }
+  
+  static final double abyss = 0.09; //abyss has to be desk abyss, if he sees more there is an abyss
+  
+  public static boolean checkAbyss() {
+		NXTUltrasonicSensor us = new NXTUltrasonicSensor(SensorPort.S4);
+		SampleProvider distance = us.getDistanceMode();
+		//gives the average of the last 5 samples
+		SampleProvider average = new MeanFilter(distance,5);
+		float[] sample = new float[average.sampleSize()];
+		
+		LCD.clear();
 
+		while (!Button.ESCAPE.isDown()) {
+			average.fetchSample(sample, 0);
+	        //LCD.drawString("US: " + sample[0], 0, 0);
+			//System.out.println("US: " + sample[0]);
+			
+			Delay.msDelay(500);
+			
+			if(sample[0] >= abyss) //wenn der abstand größer wird als der vom Tisch ist ein Abgrund da
+			{
+				//es wurde ein Abgrund erkannt, der Robot soll nun stoppen! 
+		        LCD.drawString("Abgrund erkannnnnttt!!",0,0);
+		        return true;		        
+			}
+	    }
+		
+		us.close();
+		LCD.clear();
+		return false;
+  }
+  
+
+  //-------------------------------------------------------------
+  // returnColor() - checks if the brick is yellow, if yes he
+  // returns the color code yellow (3)
+  //------------------------------------------------------------- 
+  public static final int Yellow = 3;
+
+	
+  public static int returnColor() {
+	  
+	  int mode = 1;
+	  
+	  EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+	  colorSensor.setFloodlight(false);
+	  LCD.drawString("Init", 2, 2);
+	  LCD.setAutoRefresh(false);
+	    
+	  SensorMode color = null;
+	   
+	  switch(mode) {
+	    	case 1: color = colorSensor.getColorIDMode(); break;
+	    	//case 2: color = colorSensor.getRedMode(); break;
+	    	//case 3: color = colorSensor.getAmbientMode(); break;
+	    	//default: colorSensor.getColorIDMode();
+	  }
+	    
+	
+	   float[] colorSample = new float[color.sampleSize()];
+		
+	   while (!Button.ESCAPE.isDown()) {
+			color.fetchSample(colorSample, 0);
+			
+			LCD.refresh();
+			LCD.clear();
+			LCD.drawString("ColorId: " + colorSample[0], 1, 1);
+			Delay.msDelay(500);
+			
+			//if(colorSample[0] == Yellow)
+			//{
+			//	LCD.drawString("YELLLOW: ",0,0);
+				
+				//return Yellow;
+			//}
+	   }
+		
+	   colorSensor.close();
+		
+	   return 0;
+  }
 }

@@ -9,8 +9,17 @@
 
 package kwm.robo;
 
+import lejos.hardware.Button;
+import lejos.hardware.lcd.LCD;
+import lejos.hardware.port.SensorPort;
+import lejos.hardware.sensor.EV3ColorSensor;
+import lejos.hardware.sensor.SensorMode;
+import lejos.utility.Delay;
+
 public class Strategy {
-  
+	
+	
+	
   //-------------------------------------------------------------
   // moveYellowBrick() - checks if the brick is yellow and
   // moves it from the roadway
