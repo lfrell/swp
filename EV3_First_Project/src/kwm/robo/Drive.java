@@ -26,33 +26,34 @@ public class Drive {
   //-------------------------------------------------------------  
   public static void driveOnRoadWay() {
     while(Sensor.isBlackOrRed()) {
-      forward();
+      if(!Sensor.checkAbyss())
+        forward();
     }
-    stop();
-    
-
+    //check colorsensor for intercept
+    //b
+    stop();  
   }
-  
-  //-------------------------------------------------------------
-  // forward() - drives forward
-  //------------------------------------------------------------- 
-  public static void forward() {
+  public static void driveSetUp() {
     LCD.drawString("Hello KWM! Testing the motors", 0, 4);
 
     leftMotor.resetTachoCount();
     rightMotor.resetTachoCount();
     leftMotor.rotateTo(0);
     rightMotor.rotateTo(0);
-    leftMotor.setSpeed(1000);
-    rightMotor.setSpeed(1000);
+    leftMotor.setSpeed(500);
+    rightMotor.setSpeed(500);
     leftMotor.setAcceleration(400);
     rightMotor.setAcceleration(400);
+  }
+  //-------------------------------------------------------------
+  // forward() - drives forward
+  //------------------------------------------------------------- 
+  public static void forward() {
 
+    driveSetUp();
     leftMotor.forward();
     rightMotor.forward();
-    Delay.msDelay(5000);
-    leftMotor.close();
-    rightMotor.close();
+    //Delay.msDelay(5000);
   }
   
   //-------------------------------------------------------------
@@ -61,20 +62,9 @@ public class Drive {
   public static void backward() {
     LCD.drawString("Hello KWM! Testing the motors", 0, 4);
 
-    leftMotor.resetTachoCount();
-    rightMotor.resetTachoCount();
-    leftMotor.rotateTo(0);
-    rightMotor.rotateTo(0);
-    leftMotor.setSpeed(1000);
-    rightMotor.setSpeed(1000);
-    leftMotor.setAcceleration(400);
-    rightMotor.setAcceleration(400);
-
+    driveSetUp();
     leftMotor.backward();
     rightMotor.backward();
-    Delay.msDelay(5000);
-    leftMotor.close();
-    rightMotor.close();
   }
   //-------------------------------------------------------------
   // driveCurve() - includes backward, forward and rotation
@@ -96,8 +86,6 @@ public class Drive {
     
     rightMotor.forward();
     leftMotor.forward();
-    leftMotor.close();
-    rightMotor.close();
   }
   
   //-------------------------------------------------------------
@@ -113,7 +101,8 @@ public class Drive {
   // stop() - the robo stops
   //------------------------------------------------------------- 
   public static void stop() {
-    
+    leftMotor.close();
+    rightMotor.close();
   }
   
 }
