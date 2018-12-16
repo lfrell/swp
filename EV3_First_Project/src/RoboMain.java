@@ -1,6 +1,9 @@
+import lejos.hardware.Button;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
 import lejos.robotics.RegulatedMotor;
+
+import kwm.robo.*;
 
 // -------------------------------------------------------------------- 
 // Strategy.java 
@@ -21,6 +24,14 @@ public class RoboMain {
     //testLightSensor();
     //testColorSensor(1); // new one
     //testNXTColorSensor(1); //old one second second
+    Drive.driveOnRoadWay();
+    /*
+    while(Sensor.isBlackOrRed()) {
+      //System.out.println("it's black or red");
+      
+    }
+    */
+    
 
   }
 
