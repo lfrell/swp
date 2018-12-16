@@ -1,5 +1,7 @@
 package kwm.robo;
 
+import kwm.robo.Sensor;
+
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
 import lejos.hardware.port.MotorPort;
@@ -23,6 +25,10 @@ public class Drive {
   // lines (LighSensor)
   //-------------------------------------------------------------  
   public static void driveOnRoadWay() {
+    while(Sensor.isBlackOrRed()) {
+      forward();
+    }
+    stop();
     
 
   }
