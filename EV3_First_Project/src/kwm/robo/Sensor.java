@@ -27,17 +27,26 @@ import lejos.utility.Delay;
 //changes
 
 public class Sensor {
+  static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
   //-------------------------------------------------------------
-  // colorOfLine - checks for black lines (lightsensor)
+  // isBlackOrRed - checks for black and red lines (lightsensor)
+  // return true if the line is black or red
+  // return false if there is no black or red line
   //-------------------------------------------------------------  
+  public static boolean isBlackOrRed() {
+    if(!isBlack()||!isRed()) {
+      lightSensor.close();
+      return false;
+    }
+    return true;
+    
+  }
   
   //-------------------------------------------------------------
   // isBlack - checks for black lines (lightsensor)
   //-------------------------------------------------------------  
-  
-  public static void isBlack() {
-    
-    NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
+  public static boolean isBlack() {
+       
     LCD.drawString("Init", 2, 2);
     LCD.setAutoRefresh(false);
     
@@ -51,27 +60,28 @@ public class Sensor {
 
   //SensorMode color = colorSensor.getAmbientMode(); //braucht man mit Umgebungslicht zu messen
   SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-
   float[] lightSample = new float[color.sampleSize()];
   
-  while (!Button.ESCAPE.isDown()) {
-    color.fetchSample(lightSample, 0);
-    
+    color.fetchSample(lightSample, 0); 
     LCD.refresh();
     LCD.clear();
     LCD.drawString("ColorId: " + lightSample[0],1,1);
     //LCD.drawString(" FlooLight: " + floodNumb, 1, 1);
     Delay.msDelay(500);
-  }
-  
-  lightSensor.close();
+    
+    //color is black
+    if(lightSample[0]<=0.32) {
+      return true;
+    }
+    return false;
   }
   
   //-------------------------------------------------------------
   // isRed - checks for red lines (lightsensor)
   //-------------------------------------------------------------  
   
-  public static void isRed() {
+  public static boolean isRed() {
+    return false;
     
   }
     
