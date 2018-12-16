@@ -1,3 +1,4 @@
+package kwm.test;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
 import lejos.hardware.motor.EV3LargeRegulatedMotor;
@@ -28,7 +29,7 @@ public class TestRobo {
     //lichtsensor
     testLightSensor();
     //testColorSensor(1); // new one
-    //testNXTColorSensor(1); //old one second
+    //testNXTColorSensor(1); //old one second second
   }
   
   private static void testLightSensor() {
