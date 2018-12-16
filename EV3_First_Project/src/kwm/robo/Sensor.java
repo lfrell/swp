@@ -27,14 +27,37 @@ import lejos.utility.Delay;
 //changes
 
 public class Sensor {
-  static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S1);
+  static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S3);
+  static final double red = 0.37;
+  static final double black = 0.31;
+
   //-------------------------------------------------------------
   // isBlackOrRed - checks for black and red lines (lightsensor)
   // return true if the line is black or red
   // return false if there is no black or red line
+  // Werte entsprechen den Tests mit RedMode(eingeschaltenes Licht)
+  // Zusatzinfos: 1 ist hell, 0 ist ganz dunkel
+  // 0,56... bei weiﬂem Papier
+  // 0.43 bei grau
+  // 0,32 wenn ganz schwarz... komplett schwarz
+  // 0,30 bei Abgrund
+  // weiﬂ bei Schatten 0,7  
   //-------------------------------------------------------------  
   public static boolean isBlackOrRed() {
-    if(!isBlack()||!isRed()) {
+    LCD.drawString("Init", 2, 2);
+    LCD.setAutoRefresh(false);
+    
+    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+    Delay.msDelay(2000);
+    
+    float[] lightSample = new float[color.sampleSize()];
+    color.fetchSample(lightSample, 0); 
+    LCD.refresh();
+    LCD.clear();
+    LCD.drawString("ColorId: " + lightSample[0],1,1);
+    Delay.msDelay(2000);
+    
+    if(!isBlack(lightSample[0])&&!isRed(lightSample[0])) {
       lightSensor.close();
       return false;
     }
@@ -45,32 +68,9 @@ public class Sensor {
   //-------------------------------------------------------------
   // isBlack - checks for black lines (lightsensor)
   //-------------------------------------------------------------  
-  public static boolean isBlack() {
-       
-    LCD.drawString("Init", 2, 2);
-    LCD.setAutoRefresh(false);
-    
-  //Werte entsprechen den Tests mit RedMode(eingeschaltenes Licht)
-  //Zusatzinfos: 1 ist hell, 0 ist ganz dunkel
-  //0,56... bei weiﬂem Papier
-  //0.43 bei grau
-  //0,32 wenn ganz schwarz... komplett schwarz
-  //0,30 bei Abgrund
-  //weiﬂ bei Schatten 0,7  
-
-  //SensorMode color = colorSensor.getAmbientMode(); //braucht man mit Umgebungslicht zu messen
-  SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-  float[] lightSample = new float[color.sampleSize()];
-  
-    color.fetchSample(lightSample, 0); 
-    LCD.refresh();
-    LCD.clear();
-    LCD.drawString("ColorId: " + lightSample[0],1,1);
-    //LCD.drawString(" FlooLight: " + floodNumb, 1, 1);
-    Delay.msDelay(500);
-    
+  public static boolean isBlack(double lightSample) {  
     //color is black
-    if(lightSample[0]<=0.32) {
+    if(lightSample<=black) {
       return true;
     }
     return false;
@@ -80,7 +80,11 @@ public class Sensor {
   // isRed - checks for red lines (lightsensor)
   //-------------------------------------------------------------  
   
-  public static boolean isRed() {
+  public static boolean isRed(double lightSample) {    
+    //color is black
+    if(lightSample>=red) {
+      return true;
+    }
     return false;
     
   }
@@ -181,8 +185,8 @@ public class Sensor {
   //-------------------------------------------------------------
   // checkAbyss() - checks if there is an abyss(ultra sensor)
   //------------------------------------------------------------- 
-  public static void checkAbyss() {
-    
+  public static boolean checkAbyss() {
+    return false;
   }
 
 }
