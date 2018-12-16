@@ -36,7 +36,7 @@ public class RoboMain {
    
 	 
 	  //checkAbyss();
-	  //returnColor();
+	  returnColor();
 	  
   }
   

@@ -240,9 +240,9 @@ public class Sensor {
 	   
 	  switch(mode) {
 	    	case 1: color = colorSensor.getColorIDMode(); break;
-	    	//case 2: color = colorSensor.getRedMode(); break;
-	    	//case 3: color = colorSensor.getAmbientMode(); break;
-	    	//default: colorSensor.getColorIDMode();
+	    	case 2: color = colorSensor.getRedMode(); break;
+	    	case 3: color = colorSensor.getAmbientMode(); break;
+	    	default: colorSensor.getColorIDMode();
 	  }
 	    
 	
