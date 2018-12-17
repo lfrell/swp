@@ -45,8 +45,8 @@ public class RoboMain {
 	  
 	  
 	  //TESTTAG CODE!!!!
-    //testDay1();
-	  testBlack();
+       testDay1();
+	  //testBlack();
 	  
   }
 
@@ -59,8 +59,8 @@ public class RoboMain {
   }
   
   //returns yellow constant code if he sees a yellow brick
-  public static void returnColor() {
-	  //Sensor.returnColor();
+  public static void testIsYellowColor() {
+	  Sensor.isYellowColor();
 	  //strategy.moveYellowBrick();
   }
   
@@ -87,7 +87,8 @@ public class RoboMain {
         //LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
     	  if(!drive.getIsOpen()) drive.init();
     	  drive.forward();
-        LCD.drawString("drive 1",1,1);
+        
+    	  LCD.drawString("drive 1",1,1);
 
         /*
         int brickColor = Sensor.isYellowColor();

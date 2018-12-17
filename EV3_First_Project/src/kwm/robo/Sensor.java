@@ -265,7 +265,6 @@ public class Sensor {
   //------------------------------------------------------------- 
   public static final int Yellow = 3;
 
-	
   public static int isYellowColor() {
 	  
 	  int mode = 1;

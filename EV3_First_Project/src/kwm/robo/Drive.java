@@ -24,7 +24,6 @@ public class Drive {
 	  leftMotor = new EV3LargeRegulatedMotor(MotorPort.D);
 	  rightMotor = new EV3LargeRegulatedMotor(MotorPort.A);
 	  this.isOpen = true;
-	 	  
   }
   
   public boolean getIsOpen() {
@@ -60,8 +59,8 @@ public class Drive {
     rightMotor.resetTachoCount();
     leftMotor.setSpeed(200);
     rightMotor.setSpeed(200);
-    leftMotor.setAcceleration(400);
-    rightMotor.setAcceleration(400);
+    //leftMotor.setAcceleration(400);
+    //rightMotor.setAcceleration(400);
   }
   //-------------------------------------------------------------
   // forward() - drives forward
@@ -70,7 +69,7 @@ public class Drive {
     driveSetUp();
     leftMotor.forward();
     rightMotor.forward();
-	Delay.msDelay(2000); //braucht man .. es sieht so aus als würde er nix machen, alle sachen sind in eigenem thread der im hintergrund läuft .. in dem fall würde er alle x sekunden das ding vorwärts bewegen .... man kann das auch mit while schleife machen
+	Delay.msDelay(100); //braucht man .. es sieht so aus als würde er nix machen, alle sachen sind in eigenem thread der im hintergrund läuft .. in dem fall würde er alle x sekunden das ding vorwärts bewegen .... man kann das auch mit while schleife machen
 	//leftMotor.close();
 	//rightMotor.close();
   }
@@ -93,16 +92,16 @@ public class Drive {
   // to drive a curve
   //------------------------------------------------------------- 
   public void driveCurve() {
-    LCD.drawString("Hello KWM! Testing the motors", 0, 4);
+    LCD.drawString("Testing curve", 0, 4);
+    
     //driveSetUp();
     //driveSetUp();
     //rightMotor.setAcceleration(400);
     //Funktion die dir immer Speed zurückgibt
     //leftMotor.forward();
     //rightMotor.forward();
-    Delay.msDelay(700);
+    Delay.msDelay(1);
 
-    
     backward();
     rotate(0); //1 links, 0 rechts
     //forward();
@@ -116,18 +115,18 @@ public class Drive {
   //------------------------------------------------------------- 
   public void rotate(int leftRight) {
     if(leftRight==0) {
-      rightMotor.setAcceleration(400);
+      rightMotor.setAcceleration(100);
       //Funktion die dir immer Speed zurückgibt
       leftMotor.forward();
       //rightMotor.forward();
     }else {
-      leftMotor.setAcceleration(400);
+      leftMotor.setAcceleration(100);
       //Funktion die dir immer Speed zurückgibt
       rightMotor.forward();
       //rightMotor.forward();
     }
 
-    Delay.msDelay(2000);
+    Delay.msDelay(1000);		//how far back?
   }
   
   //-------------------------------------------------------------
