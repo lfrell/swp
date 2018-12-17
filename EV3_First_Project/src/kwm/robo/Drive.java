@@ -74,16 +74,11 @@ public class Drive {
   //------------------------------------------------------------- 
   public static void driveCurve() {
     LCD.drawString("Hello KWM! Testing the motors", 0, 4);
-
     driveSetUp();
-    rightMotor.setAcceleration(400);
-    //Funktion die dir immer Speed zurückgibt
-    leftMotor.forward();
-    //rightMotor.forward();
-    Delay.msDelay(1300);
     
-    rightMotor.forward();
-    leftMotor.forward();
+    backward();
+    rotate(0); //1 links, 0 rechts
+    forward();
   }
   
   //-------------------------------------------------------------
@@ -91,8 +86,20 @@ public class Drive {
   // the defined direction, the parameter degree defines the 
   // size of the rotation (implements rotateLeft and rotateRight)
   //------------------------------------------------------------- 
-  public static void rotate(int leftRight, int degree) {
-    
+  public static void rotate(int leftRight) {
+    if(leftRight==0) {
+      rightMotor.setAcceleration(400);
+      //Funktion die dir immer Speed zurückgibt
+      leftMotor.forward();
+      //rightMotor.forward();
+    }else {
+      leftMotor.setAcceleration(400);
+      //Funktion die dir immer Speed zurückgibt
+      rightMotor.forward();
+      //rightMotor.forward();
+    }
+
+    Delay.msDelay(1300);
   }
   
   //-------------------------------------------------------------
