@@ -44,50 +44,88 @@ public class Sensor {
   // weiﬂ bei Schatten 0,7  
   //-------------------------------------------------------------  
   public static boolean isBlackOrRed() {
-    LCD.drawString("Init", 2, 2);
-    LCD.setAutoRefresh(false);
-    
-    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-    Delay.msDelay(2000);
-    
-    float[] lightSample = new float[color.sampleSize()];
-    color.fetchSample(lightSample, 0); 
-    LCD.refresh();
-    LCD.clear();
-    LCD.drawString("ColorId: " + lightSample[0],1,1);
-    Delay.msDelay(2000);
-    
-    if(!isBlack(lightSample[0])&&!isRed(lightSample[0])) {
-      lightSensor.close();
-      return false;
-    }
-    return true;
-    
+	  LCD.drawString("Init", 2, 2);
+	    LCD.setAutoRefresh(false);
+	    
+	    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+	    Delay.msDelay(2000);
+	    
+	    float[] lightSample = new float[color.sampleSize()];
+	    color.fetchSample(lightSample, 0); 
+	    LCD.refresh();
+	    LCD.clear();
+	    LCD.drawString("Black: " + lightSample[0],1,1);
+	    Delay.msDelay(2000);
+	    
+	    
+	    
+	    if(!isBlack()&&!isRed()) {
+	      lightSensor.close();
+	      return false;
+	    }
+	    return true;
   }
   
   //-------------------------------------------------------------
   // isBlack - checks for black lines (lightsensor)
   //-------------------------------------------------------------  
-  public static boolean isBlack(double lightSample) {  
-    //color is black
-    if(lightSample<=black) {
-      return true;
-    }
-    return false;
+  public static boolean isBlack() {  
+	  	
+	    
+	    LCD.drawString("Init", 2, 2);
+	    LCD.setAutoRefresh(false);
+	    
+	    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+	    Delay.msDelay(2000);
+	    
+	    float[] lightSample = new float[color.sampleSize()];
+	    color.fetchSample(lightSample, 0); 
+	    LCD.refresh();
+	    LCD.clear();
+	    LCD.drawString("Black: " + lightSample[0],1,1);
+	    Delay.msDelay(2000);
+	    
+	    if(lightSample[0] <= black)
+	    {
+	    	 lightSensor.close();
+		      return false;
+	    }
+	    return true;
   }
   
   //-------------------------------------------------------------
-  // isRed - checks for red lines (lightsensor)
+  // isRed - checks for red lines and
+  //returnts true if red line found (color sensor on the right)
   //-------------------------------------------------------------  
   
-  public static boolean isRed(double lightSample) {    
-    //color is black
-    if(lightSample>=red) {
-      return true;
-    }
-    return false;
+  public static boolean isRed() {    
     
+	EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+	colorSensor.setFloodlight(false);
+    LCD.drawString("Init", 2, 2);
+    LCD.setAutoRefresh(false);
+    
+    SensorMode color = null;
+    
+    color = colorSensor.getColorIDMode(); 
+	float[] colorSample = new float[color.sampleSize()];
+	
+	while (!Button.ESCAPE.isDown()) {
+		color.fetchSample(colorSample, 0);
+		
+		LCD.refresh();
+		LCD.clear();
+		LCD.drawString("Red: " + colorSample[0], 1, 1);
+		Delay.msDelay(500);
+		
+		if(colorSample[0] == red)
+			return true;
+	}
+	
+	colorSensor.close();
+    return false;
   }
+  
     
   //-------------------------------------------------------------
   // checkIntercept() - checks if there is an intercept (black
@@ -227,7 +265,7 @@ public class Sensor {
   public static final int Yellow = 3;
 
 	
-  public static int returnColor() {
+  public static int isYellowColor() {
 	  
 	  int mode = 1;
 	  

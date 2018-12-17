@@ -53,7 +53,7 @@ public class RoboMain {
   
   //returns yellow constant code if he sees a yellow brick
   public static void returnColor() {
-	  Sensor.returnColor();
+	  //Sensor.returnColor();
 	  //strategy.moveYellowBrick();
   }
 
