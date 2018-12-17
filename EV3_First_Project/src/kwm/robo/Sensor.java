@@ -78,17 +78,20 @@ public class Sensor {
 	    //Delay.msDelay(2000);
 	    
 	    float[] lightSample = new float[color.sampleSize()];
-	    color.fetchSample(lightSample, 0); 
-	    LCD.refresh();
-	    LCD.clear();
-	    LCD.drawString("Black: " + lightSample[0],1,1);
-	    //Delay.msDelay(2000);
-	    
-	    if(lightSample[0] <= black)
-	    {
-	    	 return true;
-	    }
-	    
+	    while (!Button.ESCAPE.isDown()) {
+  	    color.fetchSample(lightSample, 0); 
+  	    LCD.refresh();
+  	    LCD.clear();
+  	    LCD.drawString("Black: " + lightSample[0],1,1);
+  	    //Delay.msDelay(2000);
+  	    
+    	    if(lightSample[0] < black)
+    	    {
+    	    	 return true;
+    	      //return true;
+    	    }
+  	   }
+  	    
 	    lightSensor.close();
 	    return false;
   }
@@ -134,7 +137,7 @@ public class Sensor {
   //------------------------------------------------------------- 
  public static void checkIntercept(int mode) {
    LCD.drawString("in testFunc", 1, 1);
-   NXTColorSensor colorSensor = new NXTColorSensor(SensorPort.S4);
+   NXTColorSensor colorSensor = new NXTColorSensor(SensorPort.S2);
    colorSensor.setFloodlight(false);
      LCD.drawString("Init", 2, 2);
      LCD.setAutoRefresh(false);

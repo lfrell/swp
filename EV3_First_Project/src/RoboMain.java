@@ -1,11 +1,7 @@
+import kwm.robo.Drive;
+import kwm.robo.Sensor;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
-import kwm.robo.*;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.robotics.RegulatedMotor;
-import lejos.utility.Delay;
-import kwm.robo.*;
 
 // -------------------------------------------------------------------- 
 // Strategy.java 
@@ -18,44 +14,25 @@ import kwm.robo.*;
 public class RoboMain {
   
   public static void main(String[] args) {
-    // TODO Auto-generated method stub
-    //forward();
-    //backward();
-    //rotate();
-    //lichtsensor
-    //testLightSensor();
-    //testColorSensor(1); // new one
-    //testNXTColorSensor(1); //old one second second
 
-    /*
-    while(Sensor.isBlackOrRed()) {
-      //System.out.println("it's black or red");
-      
-    }
-    */
-  //  Drive.driveOnRoadWay();
-   
-	 
-	  //checkAbyss();
-	  //returnColor();
-	  
-	  /*while (!Button.ESCAPE.isDown()) {
-	  checkAbyss();
-	  }*/
-	  
-	  
-	  //TESTTAG CODE!!!!
-       testDay1();
-	  //testBlack();
-	  
+	//for test Day 1
+    testRotateWhenAbbey();
+    checkAbyss();
+    testStopWhenBlack();
+    testRotation();
+    checkIsBlack();
+    checkIsRed();
+    checkIsYellowBrick();
+    checkColorSensorForIntercept();
+  
   }
 
 	
   //returns true, if he found an abyss and stops
   public static void checkAbyss() {
-    Sensor.checkAbyss();
-    Drive drive = new Drive();
-		drive.stop();
+    while (!Button.ESCAPE.isDown()) {
+      checkAbyss();
+    }
   }
   
   //returns yellow constant code if he sees a yellow brick
@@ -64,7 +41,27 @@ public class RoboMain {
 	  //strategy.moveYellowBrick();
   }
   
-  private static void testDay1() {
+  public static void checkIsBlack() {
+    while (!Button.ESCAPE.isDown()) {
+      boolean blackState = Sensor.isBlack();
+    }
+  }
+  public static void checkIsRed() {
+    while (!Button.ESCAPE.isDown()) {
+      boolean redState = Sensor.isRed();
+    }
+  }
+  
+  public static void checkIsYellowBrick() {
+      int yellowState = Sensor.isYellowColor();
+  }
+  
+  //returns true, if he found an abyss and stops
+  public static void checkColorSensorForIntercept() {
+    Sensor.checkIntercept(1);
+  }
+  
+  private static void testRotateWhenAbbey() {
     //Sensor.checkAbyss();
     //Drive.driveCurve();
     //Drive.stop();
@@ -107,20 +104,28 @@ public class RoboMain {
     }
   }
   
-  public static void testBlack() {
-	  
+  //used to get position
+  public static void testStopWhenBlack() {
 	  Drive drive = new Drive();
-
-	  while (!Button.ESCAPE.isDown() || !Sensor.isBlack()) {
-
-		LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
-    	if(!drive.getIsOpen()) drive.init();
-    	
-    	drive.forward();
-        LCD.drawString("drive 1",1,1);
-		
-	  }
-	  
-	  drive.stop();
+    if(!drive.getIsOpen()) drive.init();    
+    drive.forward();
+	    if(Sensor.isBlack()) {
+	      //LCD.drawString("isBlack:"+isblack,1,1);
+	      LCD.drawString("drive 1",1,1);
+	      drive.stop();
+	    }
+  }
+  
+  // check rotation
+  public static void testRotation() {
+    Drive drive = new Drive();
+    if(!drive.getIsOpen()) drive.init();  
+    //move back and rotate
+    drive.rotate(0);
+    drive.stop();
+    drive.init();
+    //drive forward
+    drive.forward();
+    drive.stop();
   }
 }
