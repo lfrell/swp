@@ -137,7 +137,7 @@ public class Sensor {
   //------------------------------------------------------------- 
  public static void checkIntercept(int mode) {
    LCD.drawString("in testFunc", 1, 1);
-   NXTColorSensor colorSensor = new NXTColorSensor(SensorPort.S4);
+   NXTColorSensor colorSensor = new NXTColorSensor(SensorPort.S2);
    colorSensor.setFloodlight(false);
      LCD.drawString("Init", 2, 2);
      LCD.setAutoRefresh(false);

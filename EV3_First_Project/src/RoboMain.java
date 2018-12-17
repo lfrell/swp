@@ -1,11 +1,7 @@
+import kwm.robo.Drive;
+import kwm.robo.Sensor;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
-import kwm.robo.*;
-import lejos.hardware.motor.EV3LargeRegulatedMotor;
-import lejos.hardware.port.MotorPort;
-import lejos.robotics.RegulatedMotor;
-import lejos.utility.Delay;
-import kwm.robo.*;
 
 // -------------------------------------------------------------------- 
 // Strategy.java 
@@ -43,6 +39,7 @@ public class RoboMain {
     checkIsBlack();
     checkIsRed();
     checkIsYellowBrick();
+    checkColorSensorForIntercept();
     
 	  
   }
@@ -74,6 +71,11 @@ public class RoboMain {
   
   public static void checkIsYellowBrick() {
       int yellowState = Sensor.isYellowColor();
+  }
+  
+  //returns true, if he found an abyss and stops
+  public static void checkColorSensorForIntercept() {
+    Sensor.checkIntercept(1);
   }
   
   private static void testRotateWhenAbbey() {
