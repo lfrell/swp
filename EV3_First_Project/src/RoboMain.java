@@ -26,15 +26,6 @@ public class RoboMain {
     //testLightSensor();
     //testColorSensor(1); // new one
     //testNXTColorSensor(1); //old one second second
-
-    /*
-    while(Sensor.isBlackOrRed()) {
-      //System.out.println("it's black or red");
-      
-    }
-    */
-  //  Drive.driveOnRoadWay();
-   
 	 
 	  //checkAbyss();
 	  //returnColor();
@@ -45,17 +36,23 @@ public class RoboMain {
 	  
 	  
 	  //TESTTAG CODE!!!!
-    //testDay1();
-	  testBlack();
+    testRotateWhenAbbey();
+    checkAbyss();
+    testStopWhenBlack();
+    testRotation();
+    checkIsBlack();
+    checkIsRed();
+    checkIsYellowBrick();
+    
 	  
   }
 
 	
   //returns true, if he found an abyss and stops
   public static void checkAbyss() {
-    Sensor.checkAbyss();
-    Drive drive = new Drive();
-		drive.stop();
+    while (!Button.ESCAPE.isDown()) {
+      checkAbyss();
+    }
   }
   
   //returns yellow constant code if he sees a yellow brick
@@ -64,7 +61,22 @@ public class RoboMain {
 	  //strategy.moveYellowBrick();
   }
   
-  private static void testDay1() {
+  public static void checkIsBlack() {
+    while (!Button.ESCAPE.isDown()) {
+      boolean blackState = Sensor.isBlack();
+    }
+  }
+  public static void checkIsRed() {
+    while (!Button.ESCAPE.isDown()) {
+      boolean redState = Sensor.isRed();
+    }
+  }
+  
+  public static void checkIsYellowBrick() {
+      int yellowState = Sensor.isYellowColor();
+  }
+  
+  private static void testRotateWhenAbbey() {
     //Sensor.checkAbyss();
     //Drive.driveCurve();
     //Drive.stop();
@@ -106,20 +118,28 @@ public class RoboMain {
     }
   }
   
-  public static void testBlack() {
-	  
+  //used to get position
+  public static void testStopWhenBlack() {
 	  Drive drive = new Drive();
-
-	  while (!Button.ESCAPE.isDown() || !Sensor.isBlack()) {
-
-		LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
-    	if(!drive.getIsOpen()) drive.init();
-    	
-    	drive.forward();
-        LCD.drawString("drive 1",1,1);
-		
-	  }
-	  
-	  drive.stop();
+    if(!drive.getIsOpen()) drive.init();    
+    drive.forward();
+	    if(Sensor.isBlack()) {
+	      //LCD.drawString("isBlack:"+isblack,1,1);
+	      LCD.drawString("drive 1",1,1);
+	      drive.stop();
+	    }
+  }
+  
+  // check rotation
+  public static void testRotation() {
+    Drive drive = new Drive();
+    if(!drive.getIsOpen()) drive.init();  
+    //move back and rotate
+    drive.rotate(0);
+    drive.stop();
+    drive.init();
+    //drive forward
+    drive.forward();
+    drive.stop();
   }
 }

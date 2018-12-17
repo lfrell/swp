@@ -58,10 +58,10 @@ public class Drive {
 
     leftMotor.resetTachoCount();
     rightMotor.resetTachoCount();
-    leftMotor.setSpeed(200);
-    rightMotor.setSpeed(200);
-    leftMotor.setAcceleration(400);
-    rightMotor.setAcceleration(400);
+    leftMotor.setSpeed(100);
+    rightMotor.setSpeed(100);
+    leftMotor.setAcceleration(200);
+    rightMotor.setAcceleration(200);
   }
   //-------------------------------------------------------------
   // forward() - drives forward
