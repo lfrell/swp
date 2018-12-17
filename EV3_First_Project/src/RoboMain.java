@@ -43,7 +43,10 @@ public class RoboMain {
 	  checkAbyss();
 	  }*/
 	  
-    testDay1();
+	  
+	  //TESTTAG CODE!!!!
+    //testDay1();
+	  testBlack();
 	  
   }
 
@@ -78,7 +81,9 @@ public class RoboMain {
 		*/
 	  Drive drive = new Drive();
     while (!Button.ESCAPE.isDown()) {
-      if(/*Sensor.isBlack() &&*/ !Sensor.checkAbyss()) {
+
+    	
+      if(!Sensor.checkAbyss()) {
         //LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
     	  if(!drive.getIsOpen()) drive.init();
     	  drive.forward();
@@ -100,6 +105,21 @@ public class RoboMain {
       }    
     }
   }
+  
+  public static void testBlack() {
+	  
+	  Drive drive = new Drive();
 
+	  while (!Button.ESCAPE.isDown() || !Sensor.isBlack()) {
 
+		LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
+    	if(!drive.getIsOpen()) drive.init();
+    	
+    	drive.forward();
+        LCD.drawString("drive 1",1,1);
+		
+	  }
+	  
+	  drive.stop();
+  }
 }

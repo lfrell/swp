@@ -88,6 +88,7 @@ public class Sensor {
 	    {
 	    	 return true;
 	    }
+	    
 	    lightSensor.close();
 	    return false;
   }
