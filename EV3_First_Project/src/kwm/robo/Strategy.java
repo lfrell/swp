@@ -17,21 +17,21 @@ import lejos.hardware.sensor.SensorMode;
 import lejos.utility.Delay;
 
 public class Strategy {
-	
+	public Drive drive = new Drive();
 	
 	
   //-------------------------------------------------------------
   // moveYellowBrick() - checks if the brick is yellow and
   // moves it from the roadway
   //------------------------------------------------------------- 
-  public static void moveYellowBrick() {
+  public void moveYellowBrick() {
 	  while(!Sensor.checkAbyss() || Sensor.isBlackOrRed() ) {
-	    	Drive.forward();
+	    	drive.forward();
 	    }
 	    //check colorsensor for intercept
-	    Drive.stop();  
-	    Drive.driveCurve();
-	    Drive.stop();
+	    drive.stop();  
+	    drive.driveCurve();
+	    drive.stop();
 	    
   }
 

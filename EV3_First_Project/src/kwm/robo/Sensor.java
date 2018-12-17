@@ -70,27 +70,26 @@ public class Sensor {
   // isBlack - checks for black lines (lightsensor)
   //-------------------------------------------------------------  
   public static boolean isBlack() {  
-	  	
 	    
-	    LCD.drawString("Init", 2, 2);
+	    LCD.drawString("Init Black", 2, 2);
 	    LCD.setAutoRefresh(false);
 	    
 	    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-	    Delay.msDelay(2000);
+	    //Delay.msDelay(2000);
 	    
 	    float[] lightSample = new float[color.sampleSize()];
 	    color.fetchSample(lightSample, 0); 
 	    LCD.refresh();
 	    LCD.clear();
 	    LCD.drawString("Black: " + lightSample[0],1,1);
-	    Delay.msDelay(2000);
+	    //Delay.msDelay(2000);
 	    
 	    if(lightSample[0] <= black)
 	    {
-	    	 lightSensor.close();
-		      return false;
+	    	 return true;
 	    }
-	    return true;
+	    lightSensor.close();
+	    return false;
   }
   
   //-------------------------------------------------------------
@@ -237,7 +236,7 @@ public class Sensor {
 		float[] sample = new float[average.sampleSize()];
 		
 		LCD.clear();
-		while (!Button.ESCAPE.isDown()) {
+
 			average.fetchSample(sample, 0);
 	        //LCD.drawString("US: " + sample[0], 0, 0);
 			//System.out.println("US: " + sample[0]);
@@ -248,12 +247,13 @@ public class Sensor {
 			{
 				//es wurde ein Abgrund erkannt, der Robot soll nun stoppen! 
 		        LCD.drawString("Abgrund erkannnnnttt!!",0,0);
+		        us.close();
 		        return true;		        
 			}
-	    }
 		
-		//us.close();
+		us.close();
 		LCD.clear();
+		 LCD.drawString("KEIIIIIIN Abgrund erkannnnnttt!!",0,0);
 		return false;
   }
   

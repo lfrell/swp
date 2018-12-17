@@ -33,12 +33,16 @@ public class RoboMain {
       
     }
     */
-    Drive.driveOnRoadWay();
+  //  Drive.driveOnRoadWay();
    
 	 
 	  //checkAbyss();
 	  //returnColor();
-    
+	  
+	  /*while (!Button.ESCAPE.isDown()) {
+	  checkAbyss();
+	  }*/
+	  
     testDay1();
 	  
   }
@@ -47,7 +51,8 @@ public class RoboMain {
   //returns true, if he found an abyss and stops
   public static void checkAbyss() {
     Sensor.checkAbyss();
-		Drive.stop();
+    Drive drive = new Drive();
+		drive.stop();
   }
   
   //returns yellow constant code if he sees a yellow brick
@@ -63,22 +68,36 @@ public class RoboMain {
     //boolean isBlack = Sensor.isBlack();
     //boolean isRed = Sensor.isRed();
     //int brickColor = Sensor.isYellowColor();
-    
+	  
+	  /*
+	    while (!Button.ESCAPE.isDown()) {
+
+	            Drive.driveCurve(); //back, rotate, forward
+
+	        }
+		*/
+	  Drive drive = new Drive();
     while (!Button.ESCAPE.isDown()) {
-      if(Sensor.checkAbyss()) {
-        Drive.stop();
-        Drive.driveCurve(); //back, rotate, forward
-      }
-      if(Sensor.isBlack()||Sensor.isRed()) {
-        Drive.forward();
+      if(/*Sensor.isBlack() &&*/ !Sensor.checkAbyss()) {
+        //LCD.drawString("isBlack:"+Sensor.isBlack(),1,1);
+    	  if(!drive.getIsOpen()) drive.init();
+    	  drive.forward();
+        LCD.drawString("drive 1",1,1);
+
+        /*
         int brickColor = Sensor.isYellowColor();
         if(brickColor==3) {
           Drive.stop();
           Strategy.moveYellowBrick();
-        }
-      }
-      //LCD.drawString("isBlack:"+isBlack+",isRed:"+isRed+",yellor:"+brickColor, 1, 1);
-
+        }*/
+      }else {
+    	  drive.stop();
+    	  drive.init();
+          LCD.drawString("abyss",1,1);
+          //drive.stop();
+          drive.driveCurve(); //back, rotate, forward
+          drive.stop();
+      }    
     }
   }
 
