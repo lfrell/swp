@@ -118,11 +118,13 @@ public class Sensor {
 		
 		LCD.refresh();
 		LCD.clear();
-		LCD.drawString("Red: " + colorSample[0], 1, 1);
-		Delay.msDelay(500);
+		LCD.drawString("Color: " + colorSample[0], 1, 1);
 		
-		if(colorSample[0] == red)
+		if(colorSample[0] == 0) {
+		      LCD.drawString("RED",2,2);
 			return true;
+
+		}
 	}
 	
 	colorSensor.close();
@@ -139,7 +141,7 @@ public class Sensor {
    LCD.drawString("in testFunc", 1, 1);
    NXTColorSensor colorSensor = new NXTColorSensor(SensorPort.S2);
    colorSensor.setFloodlight(false);
-     LCD.drawString("Init", 2, 2);
+     LCD.drawString("Init", 1, 1);
      LCD.setAutoRefresh(false);
      
      SensorMode color = null;
@@ -251,6 +253,7 @@ public class Sensor {
 			{
 				//es wurde ein Abgrund erkannt, der Robot soll nun stoppen! 
 		        LCD.drawString("Abgrund erkannnnnttt!!",0,0);
+		        
 		        us.close();
 		        return true;		        
 			}

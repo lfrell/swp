@@ -2,6 +2,7 @@ import kwm.robo.Drive;
 import kwm.robo.Sensor;
 import lejos.hardware.Button;
 import lejos.hardware.lcd.LCD;
+import lejos.utility.Delay;
 
 // -------------------------------------------------------------------- 
 // Strategy.java 
@@ -17,13 +18,14 @@ public class RoboMain {
 
 	//for test Day 1
     testRotateWhenAbbey();
-    checkAbyss();
-    testStopWhenBlack();
-    testRotation();
-    checkIsBlack();
-    checkIsRed();
-    checkIsYellowBrick();
-    checkColorSensorForIntercept();
+    //checkAbyss();				//geht
+    //testStopWhenBlack();
+    //testRotation();  //nur kleine rotation!!
+    //checkIsBlack();
+    //checkIsRed();				//geht
+	 // testStopWhenRed();
+    //checkIsYellowBrick();		//würde gehen aber pos von sensor ist schlecht, müsste tiefer hängen!
+    //checkColorSensorForIntercept();  //geht nicht weil der farbsensor rechts nicht5 geht
   
   }
 
@@ -31,25 +33,23 @@ public class RoboMain {
   //returns true, if he found an abyss and stops
   public static void checkAbyss() {
     while (!Button.ESCAPE.isDown()) {
-      checkAbyss();
+    	boolean abyssState = Sensor.checkAbyss();
+		Delay.msDelay(1000);
+
     }
   }
   
-  //returns yellow constant code if he sees a yellow brick
-  public static void testIsYellowColor() {
-	  Sensor.isYellowColor();
-	  //strategy.moveYellowBrick();
-  }
-  
+
   public static void checkIsBlack() {
-    while (!Button.ESCAPE.isDown()) {
-      boolean blackState = Sensor.isBlack();
-    }
+	    while (!Button.ESCAPE.isDown()) {
+	        boolean blackState = Sensor.isBlack();
+
+	    }    
   }
   public static void checkIsRed() {
-    while (!Button.ESCAPE.isDown()) {
+	  
       boolean redState = Sensor.isRed();
-    }
+		Delay.msDelay(3000);  
   }
   
   public static void checkIsYellowBrick() {
@@ -114,6 +114,17 @@ public class RoboMain {
 	      LCD.drawString("drive 1",1,1);
 	      drive.stop();
 	    }
+  }
+  
+ public static void testStopWhenRed() {
+	  Drive drive = new Drive();
+	    if(!drive.getIsOpen()) drive.init();    
+	    drive.forward();
+		    if(Sensor.isRed()) {
+		      LCD.drawString("stooooopppppw",1,1);
+		      drive.stop();
+		    }
+	  
   }
   
   // check rotation
