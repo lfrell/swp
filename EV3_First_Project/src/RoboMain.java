@@ -16,14 +16,16 @@ public class RoboMain {
   
   public static void main(String[] args) {
 
+	//nächsten tisch 4 grüne und 2 gelbe
+	  
 	//for test Day 1
-    testRotateWhenAbbey();
+   // testRotateWhenAbbey();
     //checkAbyss();				//geht
-    //testStopWhenBlack();
+   testStopWhenBlack();
     //testRotation();  //nur kleine rotation!!
     //checkIsBlack();
     //checkIsRed();				//geht
-	 // testStopWhenRed();
+	 //testStopWhenRed();
     //checkIsYellowBrick();		//würde gehen aber pos von sensor ist schlecht, müsste tiefer hängen!
     //checkColorSensorForIntercept();  //geht nicht weil der farbsensor rechts nicht5 geht
   

@@ -28,8 +28,14 @@ import lejos.utility.Delay;
 
 public class Sensor {
   static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S3);
-  static final double red = 0.37;
-  static final double black = 0.31;
+  static final double red = 0.39;
+  static final double black = 0.36;
+  
+  //uni testtag 1:
+  //schwarz ist 0.36
+  //grau ist 0.42
+  //rot ist 0.39
+  
 
   //-------------------------------------------------------------
   // isBlackOrRed - checks for black and red lines (lightsensor)
@@ -103,7 +109,7 @@ public class Sensor {
   
   public static boolean isRed() {    
     
-	EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+	EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S2);
 	colorSensor.setFloodlight(false);
     LCD.drawString("Init", 2, 2);
     LCD.setAutoRefresh(false);
