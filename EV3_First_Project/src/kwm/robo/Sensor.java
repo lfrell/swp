@@ -27,7 +27,7 @@ import lejos.utility.Delay;
 //changes
 
 public class Sensor {
-  static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S3);
+  static final NXTLightSensor lightSensor = new NXTLightSensor(SensorPort.S2);
   static final double red = 0.39;
   static final double black = 0.36;
   
@@ -109,7 +109,7 @@ public class Sensor {
   
   public static boolean isRed() {    
     
-  EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S2);
+  EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S3);
   colorSensor.setFloodlight(false);
     LCD.drawString("Init", 2, 2);
     LCD.setAutoRefresh(false);
@@ -253,7 +253,7 @@ public class Sensor {
           //LCD.drawString("US: " + sample[0], 0, 0);
       //System.out.println("US: " + sample[0]);
       
-      Delay.msDelay(500);
+   //   Delay.msDelay(500);
       
       if(sample[0] >= abyss) //wenn der abstand größer wird als der vom Tisch ist ein Abgrund da
       {
@@ -318,17 +318,17 @@ public class Sensor {
     
      return 0;
   }
-  public static int identifyColorOfLine() {
+  public static boolean identifyColorOfLine() {
     EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S3);
     return identifyColor(colorSensor);
   }
   
-  public static int identifyColorOfBrick() {
+  public static boolean identifyColorOfBrick() {
     EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
     return identifyColor(colorSensor);
   }
   
-  private static int identifyColor(EV3ColorSensor colorSensor) {
+  private static boolean identifyColor(EV3ColorSensor colorSensor) {
     colorSensor.setFloodlight(false);
     LCD.drawString("Init", 2, 2);
     LCD.setAutoRefresh(false);
@@ -338,17 +338,23 @@ public class Sensor {
   
      float[] colorSample = new float[color.sampleSize()];
     
+     /*
      while (!Button.ESCAPE.isDown()) {
       color.fetchSample(colorSample, 0);
       
       LCD.refresh();
       LCD.clear();
       LCD.drawString("ColorId: " + colorSample[0], 1, 1);
-      Delay.msDelay(500);
+
+
      }
-    
+*/
      colorSensor.close();
-     return (int)colorSample[0];
+     if(colorSample[0] == 0 || colorSample[0]==7) {
+       return true;
+     }
+
+     return false;
     
   }
 

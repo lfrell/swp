@@ -35,7 +35,7 @@ public class Strategy {
       }
       //check colorsensor for intercept
       drive.stop();  
-      //drive.driveCurve(0);
+      drive.rotate(left, 20, false);
       drive.stop();
       
   }
@@ -53,24 +53,45 @@ public class Strategy {
   
   //drives and stops at a black line to be able to position on the black middle line
   public static boolean driveUntilLineReached() {
-    if(!drive.getIsOpen()) drive.init();    
-    drive.forward();
-    int color = Sensor.identifyColorOfLine();
-      if(color == red ||color == black) {
-        LCD.drawString("drive 1",1,1);
-        return true;
-      }
-      return false;
+    if(!drive.getIsOpen()) drive.init();
+    while(!Sensor.identifyColorOfLine()) {
+      drive.forward();
+    }
+    return false;
+
   }
 
+  public static void driveWayPerTableXX() {
+    //orangener Weg
+    //driveForwardUntilAbbeyAndRotate (fährt kurve)
+      for(int i = 0; i<direction.length; i++) {
+        if(driveUntilLineReached()||Sensor.checkAbyss()) {
+          drive.stop();
+          positionOnLine(direction[i]);
+        }
+  
+      }
+    }
+
+  
   public static void driveWayPerTable() {
     //orangener Weg
     //driveForwardUntilAbbeyAndRotate (fährt kurve)
-    for(int i = 0; i<direction.length; i++) {
-      while(!Sensor.checkAbyss()) {
-        drive.forward();    
-      }
-      positionOnLine(direction[i]);  
+    if(!drive.getIsOpen()) drive.init();
+    drive.forward();
+      //for(int i = 0; i<direction.length; i++) {
+        while(true) {
+          if ( !Sensor.checkAbyss())
+            LCD.drawString("abyss", 1, 1);
+          else if(!Sensor.identifyColorOfLine()) {
+              LCD.drawString("line", 1, 1);
+          }
+          else
+            drive.stop();
+          }
+          
+        /*positionOnLine(direction[i]); */
+      //}
     }
     /*
     while(Sensor.identifyColorOfBrick()!=3) {
@@ -81,7 +102,7 @@ public class Strategy {
     // bei gelb - move yellow Brick
     //positionOnLine
     
-  }
+  
   /*
     public static void rotateWhenAbbey() {
       while (!Button.ESCAPE.isDown()) {  

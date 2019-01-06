@@ -75,7 +75,7 @@ public class Drive {
     driveSetUp();
     leftMotor.forward();
     rightMotor.forward();
-	Delay.msDelay(100); //braucht man .. es sieht so aus als würde er nix machen, alle sachen sind in eigenem thread der im hintergrund läuft .. in dem fall würde er alle x sekunden das ding vorwärts bewegen .... man kann das auch mit while schleife machen
+	//Delay.msDelay(100); //braucht man .. es sieht so aus als würde er nix machen, alle sachen sind in eigenem thread der im hintergrund läuft .. in dem fall würde er alle x sekunden das ding vorwärts bewegen .... man kann das auch mit while schleife machen
 	//leftMotor.close();
 	//rightMotor.close();
   }

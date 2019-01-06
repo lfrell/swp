@@ -134,7 +134,7 @@ public class RoboMain {
     Drive drive = new Drive();
     if(!drive.getIsOpen()) drive.init();  
     //move back and rotate
-    drive.rotate(1,180);
+    //drive.rotate(1,180);
     drive.stop();
     //drive.init();
     //drive.forward();
