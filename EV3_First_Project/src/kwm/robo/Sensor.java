@@ -50,56 +50,56 @@ public class Sensor {
   // weiß bei Schatten 0,7  
   //-------------------------------------------------------------  
   public static boolean isBlackOrRed() {
-	  LCD.drawString("Init", 2, 2);
-	    LCD.setAutoRefresh(false);
-	    
-	    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-	    Delay.msDelay(2000);
-	    
-	    float[] lightSample = new float[color.sampleSize()];
-	    color.fetchSample(lightSample, 0); 
-	    LCD.refresh();
-	    LCD.clear();
-	    LCD.drawString("Black: " + lightSample[0],1,1);
-	    Delay.msDelay(2000);
-	    
-	    
-	    
-	    if(!isBlack()&&!isRed()) {
-	      lightSensor.close();
-	      return false;
-	    }
-	    return true;
+    LCD.drawString("Init", 2, 2);
+      LCD.setAutoRefresh(false);
+      
+      SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+      Delay.msDelay(2000);
+      
+      float[] lightSample = new float[color.sampleSize()];
+      color.fetchSample(lightSample, 0); 
+      LCD.refresh();
+      LCD.clear();
+      LCD.drawString("Black: " + lightSample[0],1,1);
+      Delay.msDelay(2000);
+      
+      
+      
+      if(!isBlack()&&!isRed()) {
+        lightSensor.close();
+        return false;
+      }
+      return true;
   }
   
   //-------------------------------------------------------------
   // isBlack - checks for black lines (lightsensor)
   //-------------------------------------------------------------  
   public static boolean isBlack() {  
-	    
-	    LCD.drawString("Init Black", 2, 2);
-	    LCD.setAutoRefresh(false);
-	    
-	    SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
-	    //Delay.msDelay(2000);
-	    
-	    float[] lightSample = new float[color.sampleSize()];
-	    while (!Button.ESCAPE.isDown()) {
-  	    color.fetchSample(lightSample, 0); 
-  	    LCD.refresh();
-  	    LCD.clear();
-  	    LCD.drawString("Black: " + lightSample[0],1,1);
-  	    //Delay.msDelay(2000);
-  	    
-    	    if(lightSample[0] < black)
-    	    {
-    	    	 return true;
-    	      //return true;
-    	    }
-  	   }
-  	    
-	    lightSensor.close();
-	    return false;
+      
+      LCD.drawString("Init Black", 2, 2);
+      LCD.setAutoRefresh(false);
+      
+      SensorMode color = lightSensor.getRedMode(); //braucht man um mit eingeschaltenen Licht zu messen
+      //Delay.msDelay(2000);
+      
+      float[] lightSample = new float[color.sampleSize()];
+      while (!Button.ESCAPE.isDown()) {
+        color.fetchSample(lightSample, 0); 
+        LCD.refresh();
+        LCD.clear();
+        LCD.drawString("Black: " + lightSample[0],1,1);
+        //Delay.msDelay(2000);
+        
+          if(lightSample[0] < black)
+          {
+             return true;
+            //return true;
+          }
+       }
+        
+      lightSensor.close();
+      return false;
   }
   
   //-------------------------------------------------------------
@@ -109,31 +109,31 @@ public class Sensor {
   
   public static boolean isRed() {    
     
-	EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S2);
-	colorSensor.setFloodlight(false);
+  EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S2);
+  colorSensor.setFloodlight(false);
     LCD.drawString("Init", 2, 2);
     LCD.setAutoRefresh(false);
     
     SensorMode color = null;
     
     color = colorSensor.getColorIDMode(); 
-	float[] colorSample = new float[color.sampleSize()];
-	
-	while (!Button.ESCAPE.isDown()) {
-		color.fetchSample(colorSample, 0);
-		
-		LCD.refresh();
-		LCD.clear();
-		LCD.drawString("Color: " + colorSample[0], 1, 1);
-		
-		if(colorSample[0] == 0) {
-		      LCD.drawString("RED",2,2);
-			return true;
+  float[] colorSample = new float[color.sampleSize()];
+  
+  while (!Button.ESCAPE.isDown()) {
+    color.fetchSample(colorSample, 0);
+    
+    LCD.refresh();
+    LCD.clear();
+    LCD.drawString("Color: " + colorSample[0], 1, 1);
+    
+    if(colorSample[0] == 0) {
+          LCD.drawString("RED",2,2);
+      return true;
 
-		}
-	}
-	
-	colorSensor.close();
+    }
+  }
+  
+  colorSensor.close();
     return false;
   }
   
@@ -241,33 +241,33 @@ public class Sensor {
   static final double abyss = 0.09; //abyss has to be desk abyss, if he sees more there is an abyss
   
   public static boolean checkAbyss() {
-		NXTUltrasonicSensor us = new NXTUltrasonicSensor(SensorPort.S4);
-		SampleProvider distance = us.getDistanceMode();
-		//gives the average of the last 5 samples
-		SampleProvider average = new MeanFilter(distance,5);
-		float[] sample = new float[average.sampleSize()];
-		
-		LCD.clear();
+    NXTUltrasonicSensor us = new NXTUltrasonicSensor(SensorPort.S4);
+    SampleProvider distance = us.getDistanceMode();
+    //gives the average of the last 5 samples
+    SampleProvider average = new MeanFilter(distance,5);
+    float[] sample = new float[average.sampleSize()];
+    
+    LCD.clear();
 
-			average.fetchSample(sample, 0);
-	        //LCD.drawString("US: " + sample[0], 0, 0);
-			//System.out.println("US: " + sample[0]);
-			
-			Delay.msDelay(500);
-			
-			if(sample[0] >= abyss) //wenn der abstand größer wird als der vom Tisch ist ein Abgrund da
-			{
-				//es wurde ein Abgrund erkannt, der Robot soll nun stoppen! 
-		        LCD.drawString("Abgrund erkannnnnttt!!",0,0);
-		        
-		        us.close();
-		        return true;		        
-			}
-		
-		us.close();
-		LCD.clear();
-		 LCD.drawString("KEIIIIIIN Abgrund erkannnnnttt!!",0,0);
-		return false;
+      average.fetchSample(sample, 0);
+          //LCD.drawString("US: " + sample[0], 0, 0);
+      //System.out.println("US: " + sample[0]);
+      
+      Delay.msDelay(500);
+      
+      if(sample[0] >= abyss) //wenn der abstand größer wird als der vom Tisch ist ein Abgrund da
+      {
+        //es wurde ein Abgrund erkannt, der Robot soll nun stoppen! 
+            LCD.drawString("Abgrund erkannnnnttt!!",0,0);
+            
+            us.close();
+            return true;            
+      }
+    
+    us.close();
+    LCD.clear();
+     LCD.drawString("KEIIIIIIN Abgrund erkannnnnttt!!",0,0);
+    return false;
   }
   
 
@@ -278,44 +278,81 @@ public class Sensor {
   public static final int Yellow = 3;
 
   public static int isYellowColor() {
-	  
-	  int mode = 1;
-	  
-	  EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
-	  colorSensor.setFloodlight(false);
-	  LCD.drawString("Init", 2, 2);
-	  LCD.setAutoRefresh(false);
-	    
-	  SensorMode color = null;
-	   
-	  switch(mode) {
-	    	case 1: color = colorSensor.getColorIDMode(); break;
-	    	case 2: color = colorSensor.getRedMode(); break;
-	    	case 3: color = colorSensor.getAmbientMode(); break;
-	    	default: colorSensor.getColorIDMode();
-	  }
-	    
-	
-	   float[] colorSample = new float[color.sampleSize()];
-		
-	   while (!Button.ESCAPE.isDown()) {
-			color.fetchSample(colorSample, 0);
-			
-			LCD.refresh();
-			LCD.clear();
-			LCD.drawString("ColorId: " + colorSample[0], 1, 1);
-			Delay.msDelay(500);
-			
-			//if(colorSample[0] == Yellow)
-			//{
-			//	LCD.drawString("YELLLOW: ",0,0);
-				
-				//return Yellow;
-			//}
-	   }
-		
-	   colorSensor.close();
-		
-	   return 0;
+    
+    int mode = 1;
+    
+    EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    colorSensor.setFloodlight(false);
+    LCD.drawString("Init", 2, 2);
+    LCD.setAutoRefresh(false);
+      
+    SensorMode color = null;
+     
+    switch(mode) {
+        case 1: color = colorSensor.getColorIDMode(); break;
+        case 2: color = colorSensor.getRedMode(); break;
+        case 3: color = colorSensor.getAmbientMode(); break;
+        default: colorSensor.getColorIDMode();
+    }
+      
+  
+     float[] colorSample = new float[color.sampleSize()];
+    
+     while (!Button.ESCAPE.isDown()) {
+      color.fetchSample(colorSample, 0);
+      
+      LCD.refresh();
+      LCD.clear();
+      LCD.drawString("ColorId: " + colorSample[0], 1, 1);
+      Delay.msDelay(500);
+      
+      if(colorSample[0] == Yellow)
+      {
+        LCD.drawString("YELLLOW: ",0,0);
+        
+        return Yellow;
+      }
+     }
+    
+     colorSensor.close();
+    
+     return 0;
   }
+  public static int identifyColorOfLine() {
+    EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S3);
+    return identifyColor(colorSensor);
+  }
+  
+  public static int identifyColorOfBrick() {
+    EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    return identifyColor(colorSensor);
+  }
+  
+  private static int identifyColor(EV3ColorSensor colorSensor) {
+    colorSensor.setFloodlight(false);
+    LCD.drawString("Init", 2, 2);
+    LCD.setAutoRefresh(false);
+      
+    SensorMode color = colorSensor.getColorIDMode();
+      
+  
+     float[] colorSample = new float[color.sampleSize()];
+    
+     while (!Button.ESCAPE.isDown()) {
+      color.fetchSample(colorSample, 0);
+      
+      LCD.refresh();
+      LCD.clear();
+      LCD.drawString("ColorId: " + colorSample[0], 1, 1);
+      Delay.msDelay(500);
+     }
+    
+     colorSensor.close();
+     return (int)colorSample[0];
+    
+  }
+
+
+  
+  
 }
