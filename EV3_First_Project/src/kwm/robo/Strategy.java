@@ -79,19 +79,16 @@ public class Strategy {
     //driveForwardUntilAbbeyAndRotate (fährt kurve)
     if(!drive.getIsOpen()) drive.init();
     drive.forward();
-      //for(int i = 0; i<direction.length; i++) {
-        while(true) {
-          if ( !Sensor.checkAbyss())
-            LCD.drawString("abyss", 1, 1);
-          else if(!Sensor.identifyColorOfLine()) {
-              LCD.drawString("line", 1, 1);
-          }
-          else
-            drive.stop();
-          }
-          
-        /*positionOnLine(direction[i]); */
-      //}
+    boolean forward = true;
+    while(forward) {
+      if(Sensor.checkAbyss()) {
+        forward = false;
+      }
+      else if(Sensor.identifyColorOfLine()) {
+        forward = false;
+      }
+    }
+    drive.stop();
     }
     /*
     while(Sensor.identifyColorOfBrick()!=3) {
