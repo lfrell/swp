@@ -21,7 +21,7 @@ public class Drive {
   public RegulatedMotor rightMotor;
   public boolean isOpen = false;
   
-  
+
   final double rad = 3.3*Math.PI;
   
   public Drive() {
@@ -44,7 +44,7 @@ public class Drive {
   // driveOnRoadWay - check the desk for the black and red
   // lines (LighSensor)
   //-------------------------------------------------------------  
-  public void driveOnRoadWay() {
+ /* public void driveOnRoadWay() {
     while(!Sensor.checkAbyss()) {
       if(Sensor.isBlackOrRed())
     	forward();
@@ -52,10 +52,11 @@ public class Drive {
     //check colorsensor for intercept
     //b
     stop();  
-    driveCurve();
+    driveCurve(0);
     stop();
     
-  }
+  }*/
+  
   public void driveSetUp() {
     LCD.drawString("Hello KWM! Testing the motors", 0, 4);
 
@@ -98,20 +99,7 @@ public class Drive {
   // to drive a curve
   //------------------------------------------------------------- 
   public void driveCurve() {
-	  //TODO FUNKTION LÖSCHEN???????
-  
-	 
-    //driveSetUp();
-    //driveSetUp();
-    //rightMotor.setAcceleration(400);
-    //Funktion die dir immer Speed zurückgibt
-    //leftMotor.forward();
-    //rightMotor.forward();
-    //Delay.msDelay(1);
-
-    //backward();
-    //rotate(0,90); //1 links, 0 rechts
-    //forward();
+	//fdkfölk
   }
   
   
