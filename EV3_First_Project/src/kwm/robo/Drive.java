@@ -20,6 +20,10 @@ public class Drive {
   public RegulatedMotor leftMotor;
   public RegulatedMotor rightMotor;
   public boolean isOpen = false;
+  
+  
+  final double rad = 3.3*Math.PI;
+  
   public Drive() {
 	  leftMotor = new EV3LargeRegulatedMotor(MotorPort.D);
 	  rightMotor = new EV3LargeRegulatedMotor(MotorPort.A);
@@ -88,23 +92,25 @@ public class Drive {
     rightMotor.backward();
     Delay.msDelay(1000);
   }
+  
   //-------------------------------------------------------------
   // driveCurve() - includes backward, forward and rotation
   // to drive a curve
   //------------------------------------------------------------- 
   public void driveCurve() {
-    LCD.drawString("Testing curve", 0, 4);
-    
+	  //TODO FUNKTION LÖSCHEN???????
+  
+	 
     //driveSetUp();
     //driveSetUp();
     //rightMotor.setAcceleration(400);
     //Funktion die dir immer Speed zurückgibt
     //leftMotor.forward();
     //rightMotor.forward();
-    Delay.msDelay(1);
+    //Delay.msDelay(1);
 
-    backward();
-    rotate(0); //1 links, 0 rechts
+    //backward();
+    //rotate(0,90); //1 links, 0 rechts
     //forward();
   }
   
@@ -113,21 +119,38 @@ public class Drive {
   // rotate() - based on parameter leftRight, it rotates to 
   // the defined direction, the parameter degree defines the 
   // size of the rotation (implements rotateLeft and rotateRight)
+  //parameter: leftRight = 1 links, 0 rechts; int degrees=zb 90 degrees; bool positionWithCurve=if true it drives a curve and  considers the 7 cm of the distance of the lightsensor to the middle of the robo!
   //------------------------------------------------------------- 
-  public void rotate(int leftRight) {
-    if(leftRight==0) {
-      rightMotor.setAcceleration(100);
-      //Funktion die dir immer Speed zurückgibt
-      leftMotor.forward();
-      //rightMotor.forward();
+  public void rotate(int leftRight, int degrees, boolean positionWithCurve) {
+	  int radius=1; //die kurve in cm die er fährt
+
+	 if (positionWithCurve)
+		  radius = 7; //nicht ändern!!! ist die exakte Entfernung vom Lichtsensor zur Robo Mitte die er berücksichtigt beim rotaten!
+		  
+    double drehi = (radius*Math.PI*2*360)/rad/360*degrees;
+  	double dreha = ((radius+10.5)*Math.PI*2*360)/rad/360*degrees;
+
+  	int speed = (int) (200/dreha*drehi);
+  	
+  	if(leftRight==0) {
+  		rightMotor.setSpeed(speed);
+
+    	leftMotor.rotate((int)dreha,true);
+    	rightMotor.rotate((int)drehi);
+    	
+    	rightMotor.setSpeed(200);
+
     }else {
-      leftMotor.setAcceleration(100);
-      //Funktion die dir immer Speed zurückgibt
-      rightMotor.forward();
-      //rightMotor.forward();
+  		leftMotor.setSpeed(speed);
+
+    	rightMotor.rotate((int)dreha,true);
+    	leftMotor.rotate((int)drehi);
+    	
+    	leftMotor.setSpeed(200);
     }
 
     Delay.msDelay(1000);		//how far back?
+    
   }
   
   //-------------------------------------------------------------
