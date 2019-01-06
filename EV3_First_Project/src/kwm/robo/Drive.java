@@ -48,7 +48,7 @@ public class Drive {
     //check colorsensor for intercept
     //b
     stop();  
-    driveCurve();
+    driveCurve(0);
     stop();
     
   }
@@ -92,7 +92,7 @@ public class Drive {
   // driveCurve() - includes backward, forward and rotation
   // to drive a curve
   //------------------------------------------------------------- 
-  public void driveCurve() {
+  public void driveCurve(int leftRight) {
     LCD.drawString("Testing curve", 0, 4);
     
     //driveSetUp();
@@ -104,7 +104,7 @@ public class Drive {
     Delay.msDelay(1);
 
     backward();
-    rotate(0); //1 links, 0 rechts
+    rotate(leftRight); //1 links, 0 rechts
     //forward();
   }
   

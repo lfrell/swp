@@ -306,16 +306,53 @@ public class Sensor {
 			LCD.drawString("ColorId: " + colorSample[0], 1, 1);
 			Delay.msDelay(500);
 			
-			//if(colorSample[0] == Yellow)
-			//{
-			//	LCD.drawString("YELLLOW: ",0,0);
+			if(colorSample[0] == Yellow)
+			{
+				LCD.drawString("YELLLOW: ",0,0);
 				
-				//return Yellow;
-			//}
+				return Yellow;
+			}
 	   }
 		
 	   colorSensor.close();
 		
 	   return 0;
   }
+  public static int identifyColorOfLine() {
+    EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S3);
+    return identifyColor(colorSensor);
+  }
+  
+  public static int identifyColorOfBrick() {
+    EV3ColorSensor colorSensor = new EV3ColorSensor(SensorPort.S1);
+    return identifyColor(colorSensor);
+  }
+  
+  private static int identifyColor(EV3ColorSensor colorSensor) {
+    colorSensor.setFloodlight(false);
+    LCD.drawString("Init", 2, 2);
+    LCD.setAutoRefresh(false);
+      
+    SensorMode color = colorSensor.getColorIDMode();
+      
+  
+     float[] colorSample = new float[color.sampleSize()];
+    
+     while (!Button.ESCAPE.isDown()) {
+      color.fetchSample(colorSample, 0);
+      
+      LCD.refresh();
+      LCD.clear();
+      LCD.drawString("ColorId: " + colorSample[0], 1, 1);
+      Delay.msDelay(500);
+     }
+    
+     colorSensor.close();
+     return (int)colorSample[0];
+    
+  }
+
+
+  
+  
 }
