@@ -21,8 +21,8 @@ public class RoboMain {
 	//for test Day 1
    // testRotateWhenAbbey();
     //checkAbyss();				//geht
-   testStopWhenBlack();
-    //testRotation();  //nur kleine rotation!!
+  // testStopWhenBlack();
+    testRotation();  //nur kleine rotation!!
     //checkIsBlack();
     //checkIsRed();				//geht
 	 //testStopWhenRed();
@@ -134,11 +134,10 @@ public class RoboMain {
     Drive drive = new Drive();
     if(!drive.getIsOpen()) drive.init();  
     //move back and rotate
-    drive.rotate(0);
+    drive.rotate(1,180);
     drive.stop();
-    drive.init();
-    //drive forward
-    drive.forward();
+    //drive.init();
+    //drive.forward();
     drive.stop();
   }
 }
